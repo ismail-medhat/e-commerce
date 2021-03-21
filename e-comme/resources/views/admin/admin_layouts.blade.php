@@ -50,42 +50,28 @@
 @else
 
     <!-- ########## START: LEFT PANEL ########## -->
-    <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> starlight</a></div>
+    <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> Admin Dahboard</a></div>
     <div class="sl-sideleft">
-        <div class="input-group input-group-search">
-            <input type="search" name="search" class="form-control" placeholder="Search">
-            <span class="input-group-btn">
-          <button class="btn"><i class="fa fa-search"></i></button>
-        </span><!-- input-group-btn -->
-        </div><!-- input-group -->
 
-        <label class="sidebar-label">Navigation</label>
         <div class="sl-sideleft-menu">
-            <a href="index.html" class="sl-menu-link active">
+            <a href="{{ route('admin.home') }}" class="sl-menu-link active">
                 <div class="sl-menu-item">
                     <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
                     <span class="menu-item-label">Dashboard</span>
                 </div><!-- menu-item -->
             </a><!-- sl-menu-link -->
-            <a href="widgets.html" class="sl-menu-link">
-                <div class="sl-menu-item">
-                    <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-                    <span class="menu-item-label">Cards &amp; Widgets</span>
-                </div><!-- menu-item -->
-            </a><!-- sl-menu-link -->
+
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
                     <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-                    <span class="menu-item-label">Charts</span>
+                    <span class="menu-item-label">Category</span>
                     <i class="menu-item-arrow fa fa-angle-down"></i>
                 </div><!-- menu-item -->
             </a><!-- sl-menu-link -->
             <ul class="sl-menu-sub nav flex-column">
-                <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
-                <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
-                <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Chart JS</a></li>
-                <li class="nav-item"><a href="chart-rickshaw.html" class="nav-link">Rickshaw</a></li>
-                <li class="nav-item"><a href="chart-sparkline.html" class="nav-link">Sparkline</a></li>
+                <li class="nav-item"><a href="chart-morris.html" class="nav-link">Category</a></li>
+                <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Category</a></li>
+                <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brand</a></li>
             </ul>
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
@@ -187,10 +173,7 @@
                     <div class="dropdown-menu dropdown-menu-header wd-200">
                         <ul class="list-unstyled user-profile-nav">
                             <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
-                            <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-                            <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
-                            <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-                            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
+                            <li><a href="{{ route('admin.password.change') }}"><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
                             <li><a href="{{ route('admin.logout') }}"><i class="icon ion-power"></i> Sign Out</a></li>
                         </ul>
                     </div><!-- dropdown-menu -->
@@ -406,6 +389,8 @@
 <script src="{{asset('backend/js/ResizeSensor.js')}}"></script>
 <script src="{{asset('backend/js/dashboard.js')}}"></script>
 
+<!-- Add Sweet Alert -->
+<script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 <!-- Add Toaster js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
@@ -431,6 +416,27 @@
     }
 
     @endif
+</script>
+
+<script>
+    $(document).on("click", "#delete", function (e) {
+        e.preventDefault();
+        var link = $(this).attr("href");
+        swal({
+            title: "Are you Want to delete?",
+            text: "Once Delete, This will be Permanently Delete!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = link;
+                } else {
+                    swal("Safe Data!");
+                }
+            });
+    });
 </script>
 
 </body>
