@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', function () {return view('layouts.app');});
+Route::get('/', function () {return view('pages.index');})->name('page.index');
 
 //auth & user
 Auth::routes();
@@ -36,4 +36,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('/update/reset', 'ResetPasswordController@reset')->name('admin.reset.update');
     Route::get('/Change/Password','AdminController@ChangePassword')->name('admin.password.change');
     Route::post('/password/update','AdminController@Update_pass')->name('admin.password.update');
+    // Category Section..
+    Route::group(['namespace'=>'Category'], function (){
+       Route::get('categories','CategoryController@category')->name('categories');
+       Route::post('store/category','CategoryController@storeCategory')->name('store.category');
+       Route::get('delete/category/{cat_id}','CategoryController@deleteCategory')->name('delete.category');
+       Route::get('edit/category/{cat_id}','CategoryController@editCategory')->name('edit.category');
+       Route::post('update/category/{cat_id}','CategoryController@updateCategory')->name('update.category');
+    });
 });
