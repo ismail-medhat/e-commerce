@@ -14,4 +14,11 @@ class Category extends Model
         'pivot',
     ];
     public $timestamps = true;
+
+    /* The Relationship between categories table and subcategories table */
+    public function subcat()
+    {
+        return $this->hasMany('App\Model\Admin\Subcategory');
+    }
+
 }

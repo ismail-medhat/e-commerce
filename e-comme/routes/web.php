@@ -52,4 +52,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('edit/brand/{brand_id}','BrandController@editBrand')->name('edit.brand');
         Route::post('update/brand/{brand_id}','BrandController@updateBrand')->name('update.brand');
     });
+    // Subcategories Section..
+    Route::group(['namespace'=>'Category'], function (){
+        Route::get('subcategories','SubCategoryController@subcategory')->name('sub.categories');
+        Route::post('store/subcategories','SubCategoryController@storeSubcategory')->name('store.subcategory');
+        Route::get('delete/subcategory/{subcat_id}','SubCategoryController@deleteSubcategory')->name('delete.subcategory');
+        Route::get('edit/subcategory/{subcat_id}','SubCategoryController@editSubcategory')->name('edit.subcategory');
+        Route::post('update/subcategory/{subcat_id}','SubCategoryController@updateSubcategory')->name('update.subcategory');
+    });
 });
