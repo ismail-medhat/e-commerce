@@ -26,7 +26,7 @@ class CategoryController extends Controller
     {
 
         // validate input of category name..
-        $validateData = $request->validate([
+        $request->validate([
             'category_name' => 'required|max:255|unique:categories'
         ]);
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller
     public function updateCategory(Request $request,$cat_id)
     {
         // validate input of category name..
-        $validateData = $request->validate([
+        $request->validate([
             'category_name' => 'required|max:255'
         ]);
         // update category by cat_id..

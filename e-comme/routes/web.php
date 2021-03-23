@@ -44,4 +44,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
        Route::get('edit/category/{cat_id}','CategoryController@editCategory')->name('edit.category');
        Route::post('update/category/{cat_id}','CategoryController@updateCategory')->name('update.category');
     });
+    // Brands Section..
+    Route::group(['namespace'=>'Category'], function (){
+        Route::get('brands','BrandController@brand')->name('brands');
+        Route::post('store/brand','BrandController@storeBrand')->name('store.brand');
+        Route::get('delete/brand/{brand_id}','BrandController@deleteBrand')->name('delete.brand');
+        Route::get('edit/brand/{brand_id}','BrandController@editBrand')->name('edit.brand');
+        Route::post('update/brand/{brand_id}','BrandController@updateBrand')->name('update.brand');
+    });
 });
