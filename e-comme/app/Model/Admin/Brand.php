@@ -15,4 +15,10 @@ class Brand extends Model
         'pivot',
     ];
     public $timestamps = true;
+
+    /* The Relationship between brand table and product table */
+    public function product()
+    {
+        return $this->hasMany('App\Model\Admin\Product');
+    }
 }

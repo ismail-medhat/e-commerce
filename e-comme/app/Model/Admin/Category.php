@@ -21,4 +21,10 @@ class Category extends Model
         return $this->hasMany('App\Model\Admin\Subcategory');
     }
 
+    /* The Relationship between category table and product table */
+    public function product()
+    {
+        return $this->hasMany('App\Model\Admin\Product');
+    }
+
 }
