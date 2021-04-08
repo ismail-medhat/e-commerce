@@ -1,3 +1,10 @@
+
+@php
+
+    $category = DB::table('categories')->get();
+
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +15,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/styles/bootstrap4/bootstrap.min.css')}}">
     <link href="plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{asset('frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
@@ -99,12 +110,9 @@
                                                 <span class="custom_dropdown_placeholder clc">All Categories</span>
                                                 <i class="fas fa-chevron-down"></i>
                                                 <ul class="custom_list clc">
-                                                    <li><a class="clc" href="#">All Categories</a></li>
-                                                    <li><a class="clc" href="#">Computers</a></li>
-                                                    <li><a class="clc" href="#">Laptops</a></li>
-                                                    <li><a class="clc" href="#">Cameras</a></li>
-                                                    <li><a class="clc" href="#">Hardware</a></li>
-                                                    <li><a class="clc" href="#">Smartphones</a></li>
+                                                    @foreach($category as $cat)
+                                                    <li><a class="clc" href="#">{{ $cat->category_name }}</a></li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>

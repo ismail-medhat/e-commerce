@@ -24,7 +24,7 @@
                     @csrf
                     <div class="form-layout">
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Name: <span
                                             class="tx-danger">*</span></label>
@@ -37,9 +37,9 @@
                                     </span>
                                     @enderror
                                 </div>
+                            </div><!-- col-6 -->
 
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Code: <span
                                             class="tx-danger">*</span></label>
@@ -52,8 +52,9 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
+                            </div><!-- col-6 -->
+
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Quantity: <span
                                             class="tx-danger">*</span></label>
@@ -66,7 +67,23 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div><!-- col-4 -->
+                            </div><!-- col-6 -->
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Discount Price: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control @error('discount_price') is-invalid @enderror"
+                                           type="text" name="discount_price"
+                                           placeholder="Enter Discount Price">
+                                    @error('discount_price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div><!-- col-6 -->
+
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>

@@ -29,8 +29,8 @@
                             <th class="wd-15p">Image</th>
                             <th class="wd-15p">Category</th>
                             <th class="wd-15p">Brand</th>
-                            <th class="wd-10p">Quantity</th>
-                            <th class="wd-10p">Status</th>
+                            <th class="wd-5p">Quantity</th>
+                            <th class="wd-5p">Status</th>
                             <th class="wd-20p">Action</th>
                         </tr>
                         </thead>
