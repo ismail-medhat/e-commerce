@@ -121,4 +121,7 @@ Route::group(['namespace'=>'Front'],function (){
 
 // TODO: ADD Wishlist..
 Route::get('add/wishlist/{product_id}','WishlistController@addWishlist')->name('add.wishlist');
+// TODO: ADD To Cart..
+Route::get('add/to/cart/{product_id}','CartController@addCart');
+Route::get('check','CartController@check');
 
