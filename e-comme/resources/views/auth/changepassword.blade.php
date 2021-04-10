@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Change Password') }}</div>
+                    <div class="card-header">{{ __('Change Your Password') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('password.update') }}"
@@ -67,8 +67,27 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div><!-- col-8 -->
+
+            <div class="col-4">
+                <div class="card">
+                    <img src="{{ asset('frontend/images/profile.png') }}" class="card-img-top"
+                         style="height: 90px;width: 90px;margin-left:37%; ">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ Auth::user()->name }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{{ route('password.change') }}">Change Password</a></li>
+                        <li class="list-group-item">Line 1</li>
+                        <li class="list-group-item">Line 1</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="{{ route('user.logout') }}" class="btn btn-danger btn-sm btn-block">Logout</a>
+                    </div>
+                </div>
+            </div><!-- col-4 -->
+
+        </div><!-- row -->
     </div>
 @endsection
 

@@ -200,6 +200,17 @@
 
                         <div class="col-lg-4">
                             <label>
+                                @if($product->buyone_getone == 1)
+                                    <span class="badge badge-pill badge-success">Active</span>
+                                @else
+                                    <span class="badge badge-pill badge-warning">Inactive</span>
+                                @endif
+                                <span>Buyone Getone</span>
+                            </label>
+                        </div><!-- col-4 -->
+
+                        <div class="col-lg-4">
+                            <label>
                                 @if($product->trend == 1)
                                     <span class="badge badge-pill badge-success">Active</span>
                                 @else

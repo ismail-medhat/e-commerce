@@ -1,11 +1,10 @@
-
 @php
 
     $category = DB::table('categories')->get();
 
 @endphp
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>OneTech</title>
@@ -16,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/styles/bootstrap4/bootstrap.min.css')}}">
     <link href="plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
 
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
@@ -28,6 +28,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/styles/responsive.css')}}">
     <!-- Add Toaster css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <!-- Add SweetAlert css -->
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
 </head>
 
@@ -58,25 +60,34 @@
                                     <li>
                                         <a href="#">English<i class="fas fa-chevron-down"></i></a>
                                         <ul>
-                                            <li><a href="#">Italian</a></li>
-                                            <li><a href="#">Spanish</a></li>
-                                            <li><a href="#">Japanese</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">EUR Euro</a></li>
-                                            <li><a href="#">GBP British Pound</a></li>
-                                            <li><a href="#">JPY Japanese Yen</a></li>
+                                            <li><a href="#">Arabic</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
                             <div class="top_bar_user">
-                                <div class="user_icon"><img src="{{asset('frontend/images/user.svg')}}" alt=""></div>
-                                <div><a href="{{ route('register') }}">Register</a></div>
-                                <div><a href="{{ route('login') }}">Sign in</a></div>
+
+                                @guest
+                                    <div><a href="{{ route('login') }}">
+                                            <div class="user_icon"><img src="{{asset('frontend/images/user.svg')}}"
+                                                                        alt=""></div>
+                                            Register/Login</a></div>
+                                @else
+                                    <ul class="standard_dropdown top_bar_dropdown">
+                                        <li>
+                                            <a href="{{ route('home') }}">
+                                                <div class="user_icon"><img src="{{asset('frontend/images/user.svg')}}"
+                                                                            alt=""></div>
+                                                Profile<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li><a href="#">Wishlist</a></li>
+                                                <li><a href="#">Checkout</a></li>
+                                                <li><a href="#">Others</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                @endguest
+
                             </div>
                         </div>
                     </div>
@@ -93,7 +104,8 @@
                     <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
                         <div class="logo_container">
-                            <div class="logo"><a href="{{ route('page.index') }}"><img src="{{ asset('frontend/images/logo.png') }}"></a></div>
+                            <div class="logo"><a href="{{ route('page.index') }}"><img
+                                        src="{{ asset('frontend/images/logo.png') }}"></a></div>
                         </div>
                     </div>
 
@@ -111,7 +123,7 @@
                                                 <i class="fas fa-chevron-down"></i>
                                                 <ul class="custom_list clc">
                                                     @foreach($category as $cat)
-                                                    <li><a class="clc" href="#">{{ $cat->category_name }}</a></li>
+                                                        <li><a class="clc" href="#">{{ $cat->category_name }}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -281,6 +293,8 @@
 <script src="{{asset('frontend/plugins/slick-1.8.0/slick.js')}}"></script>
 <script src="{{asset('frontend/plugins/easing/easing.js')}}"></script>
 <script src="{{asset('frontend/js/custom.js')}}"></script>
+<!-- Add Sweet Alert JS CDN -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- Add Sweet Alert -->
 <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>

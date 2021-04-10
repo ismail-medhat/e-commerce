@@ -272,6 +272,15 @@
 
                             <div class="col-lg-4">
                                 <label class="ckbox">
+                                    <input type="checkbox" name="buyone_getone" value="1" <?php if ($product->buyone_getone == 1) {
+                                        echo "checked";
+                                    }?>>
+                                    <span>Buyone Getone</span>
+                                </label>
+                            </div><!-- col-4 -->
+
+                            <div class="col-lg-4">
+                                <label class="ckbox">
                                     <input type="checkbox" name="trend" value="1" <?php if ($product->trend == 1) {
                                         echo "checked";
                                     }?>>

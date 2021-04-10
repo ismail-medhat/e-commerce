@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return view('pages.index');})->name('page.index');
 
-// TODO: auth & user
-Auth::routes();
+// TODO: auth & user [->middleware('verified')]
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
-Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
+Route::get('/password/change', 'HomeController@changePassword')->name('password.change');
+Route::post('/password/update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@logout')->name('user.logout');
 
 
@@ -117,3 +117,8 @@ Route::group(['namespace'=>'Front'],function (){
     // Subscribe
     Route::post('store/newslater','FrontController@StoreNewslater')->name('store.newslater');
 });
+
+
+// TODO: ADD Wishlist..
+Route::get('add/wishlist/{product_id}','WishlistController@addWishlist')->name('add.wishlist');
+
