@@ -204,19 +204,22 @@
                                                     @endif
 
                                                     <div class="product_name">
-                                                        <div><a href="product.html">{{ $row->product_name }}</a></div>
-                                                    </div>
-                                                    <div class="product_extras">
-                                                        <div class="product_color">
-                                                            <input type="radio" checked name="product_color"
-                                                                   style="background:#b19c83">
-                                                            <input type="radio" name="product_color"
-                                                                   style="background:#000000">
-                                                            <input type="radio" name="product_color"
-                                                                   style="background:#999999">
+                                                        <div>
+                                                            <a href="{{ url('product/details/'.$row->id.'/'.$row->product_name) }}">{{ $row->product_name }}</a>
                                                         </div>
-                                                        <button class="product_cart_button addcart" data-id="{{$row->id}}">Add to Cart</button>
                                                     </div>
+
+                                                    {{--                                                    <div class="product_extras">--}}
+                                                    {{--                                                        <button class="product_cart_button addcart" data-id="{{$row->id}}">Add to Cart</button>--}}
+                                                    {{--                                                    </div>--}}
+
+                                                    <div class="product_extras">
+                                                        <button id="{{ $row->id }}" class="product_cart_button addcart"
+                                                                data-toggle="modal" data-target="#cartmodal"
+                                                                onclick="productview(this.id)">Add to Cart
+                                                        </button>
+                                                    </div>
+
                                                 </div>
                                                 <button class="addwishlist" data-id="{{$row->id}}">
                                                     <div class="product_fav"><i class="fas fa-heart"></i></div>
@@ -1961,52 +1964,163 @@
     </div>
 
 
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLevel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Product Quick View</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="" id="pimage">
+                                <div class="card-body"><h5 class="card-title text-center" id="pname"></h5></div>
+                            </div>
+                        </div><!-- col-md-4 -->
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Product Code : <span id="pcode"></span></li>
+                                    <li class="list-group-item">Category : <span id="pcat"></span></li>
+                                    <li class="list-group-item">Subcategory : <span id="psub"></span></li>
+                                    <li class="list-group-item">Brand : <span id="pbrand"></span></li>
+                                    <li class="list-group-item">Stock : <span class="badge"
+                                                                              style="background-color: green;color: white;">Available</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!-- col-md-4 -->
+
+                        <div class="col-md-4">
+                            <form method="POST" action="{{ route('insert.into.cart') }}">
+                                @csrf
+                                <input type="hidden" name="product_id" id="product_id">
+                                <div class="form-group">
+                                    <label for="exampleInputcolor">Color</label>
+                                    <select class="form-control" name="color" id="color">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputsize">Size</label>
+                                    <select class="form-control" name="size" id="size">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputquanity">Quantity</label>
+                                    <input type="number" class="form-control" name="qty" value="1">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add to cart</button>
+                            </form>
+                        </div><!-- col-md-4 -->
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
-
     <script>
-        $(document).ready(function () {
-            $('.addcart').on('click', function () {
-                var id = $(this).data('id');
-                if (id) {
-                    $.ajax({
-                        url: "{{ url('add/to/cart/') }}/" + id,
-                        type: "Get",
-                        datatype: "json",
-                        success: function (data) {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
+        function productview(id) {
+            $.ajax({
+                url: "{{ url('/cart/product/view/') }}/" + id,
+                type: "GET",
+                datatype: "json",
+                success: function (data) {
+                    $('#pcode').text(data.product.product_code);
+                    $('#pcat').text(data.product.category_name);
+                    $('#psub').text(data.product.subcategory_name);
+                    $('#pbrand').text(data.product.brand_name);
+                    $('#pname').text(data.product.product_name);
+                    $('#pimage').attr('src', data.product.image_one);
+                    $('#product_id').val(data.product.id);
 
-                            if ($.isEmptyObject(data.error)) {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: data.success
-                                })
-                            } else {
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: data.error
-                                })
-                            }
-
-                        },
+                    var d = $('select[name="color"]').empty();
+                    $.each(data.color, function (key, value) {
+                        $('select[name="color"]').append('<option value=" ' + value + '">' + value + '</option>');
                     });
-                } else {
-                    alert('danger');
-                }
-            });
-        });
+
+                    var d = $('select[name="size"]').empty();
+                    $.each(data.size, function (key, value) {
+                        $('select[name="size"]').append('<option value=" ' + value + '">' + value + '</option>');
+                    });
+
+                },
+            })
+        }
     </script>
+
+
+    {{--    <script>--}}
+    {{--        $(document).ready(function () {--}}
+    {{--            $('.addcart').on('click', function () {--}}
+    {{--                var id = $(this).data('id');--}}
+    {{--                if (id) {--}}
+    {{--                    $.ajax({--}}
+    {{--                        url: "{{ url('add/to/cart/') }}/" + id,--}}
+    {{--                        type: "Get",--}}
+    {{--                        datatype: "json",--}}
+    {{--                        success: function (data) {--}}
+    {{--                            const Toast = Swal.mixin({--}}
+    {{--                                toast: true,--}}
+    {{--                                position: 'top-end',--}}
+    {{--                                showConfirmButton: false,--}}
+    {{--                                timer: 3000,--}}
+    {{--                                timerProgressBar: true,--}}
+    {{--                                didOpen: (toast) => {--}}
+    {{--                                    toast.addEventListener('mouseenter', Swal.stopTimer)--}}
+    {{--                                    toast.addEventListener('mouseleave', Swal.resumeTimer)--}}
+    {{--                                }--}}
+    {{--                            })--}}
+
+    {{--                            if ($.isEmptyObject(data.error)) {--}}
+    {{--                                Toast.fire({--}}
+    {{--                                    icon: 'success',--}}
+    {{--                                    title: data.success--}}
+    {{--                                })--}}
+    {{--                            } else {--}}
+    {{--                                Toast.fire({--}}
+    {{--                                    icon: 'error',--}}
+    {{--                                    title: data.error--}}
+    {{--                                })--}}
+    {{--                            }--}}
+
+    {{--                        },--}}
+    {{--                    });--}}
+    {{--                } else {--}}
+    {{--                    alert('danger');--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        });--}}
+    {{--    </script>--}}
 
 
 

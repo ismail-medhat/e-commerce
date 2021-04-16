@@ -18,7 +18,7 @@ Route::get('/', function () {return view('pages.index');})->name('page.index');
 
 // TODO: auth & user [->middleware('verified')]
 Auth::routes(['verify' => true]);
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/password/change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password/update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@logout')->name('user.logout');
@@ -121,7 +121,19 @@ Route::group(['namespace'=>'Front'],function (){
 
 // TODO: ADD Wishlist..
 Route::get('add/wishlist/{product_id}','WishlistController@addWishlist')->name('add.wishlist');
+
 // TODO: ADD To Cart..
 Route::get('add/to/cart/{product_id}','CartController@addCart');
 Route::get('check','CartController@check');
+Route::get('product/cart','CartController@showCart')->name('show.cart');
+Route::get('remove/cart/{rowId}','CartController@removeCart')->name('remove.cart');
+Route::post('update/cart/qty','CartController@updateCartQty')->name('update.cart.item');
+Route::get('cart/product/view/{id}','CartController@viewProduct');
+Route::post('insert/into/cart/','CartController@insertCart')->name('insert.into.cart');
+Route::get('user/checkout','CartController@checkout')->name('user.checkout');
+Route::get('user/wishlist','CartController@wishlist')->name('user.wishlist');
+// TODO: Product Details Get..
+Route::get('product/details/{product_id}/{product_name}','ProductController@productView');
+Route::post('cart/product/add/{product_id}','ProductController@addCart');
+
 
