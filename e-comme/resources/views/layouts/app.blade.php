@@ -57,11 +57,19 @@
                         <div class="top_bar_content ml-auto">
                             <div class="top_bar_menu">
                                 <ul class="standard_dropdown top_bar_dropdown">
+
+                                    @php
+                                    $language = Session()->get('lang');
+                                    @endphp
+
+
                                     <li>
-                                        <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">Arabic</a></li>
-                                        </ul>
+                                        @if(Session()->get('lang') == 'arabic')
+                                            <a href="{{ route('language.english') }}">English<i class="fas fa-chevron-down"></i></a>
+                                        @else
+                                            <a href="{{ route('language.arabic') }}">Arabic<i class="fas fa-chevron-down"></i></a>
+                                        @endif
+
                                     </li>
                                 </ul>
                             </div>
@@ -152,7 +160,8 @@
                                     <div class="wishlist_icon"><img src="{{asset('frontend/images/heart.png')}}" alt="">
                                     </div>
                                     <div class="wishlist_content">
-                                        <div class="wishlist_text"><a href="{{ route('user.wishlist') }}">Wishlist</a></div>
+                                        <div class="wishlist_text"><a href="{{ route('user.wishlist') }}">Wishlist</a>
+                                        </div>
                                         <div class="wishlist_count">{{ count($wishlist) }}</div>
                                     </div>
                                 @endguest

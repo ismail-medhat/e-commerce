@@ -132,8 +132,21 @@ Route::get('cart/product/view/{id}','CartController@viewProduct');
 Route::post('insert/into/cart/','CartController@insertCart')->name('insert.into.cart');
 Route::get('user/checkout','CartController@checkout')->name('user.checkout');
 Route::get('user/wishlist','CartController@wishlist')->name('user.wishlist');
+Route::post('user/apply/coupon','CartController@coupon')->name('apply.coupon');
+Route::get('remove/coupon','CartController@removeCoupon')->name('coupon.remove');
 // TODO: Product Details Get..
 Route::get('product/details/{product_id}/{product_name}','ProductController@productView');
 Route::post('cart/product/add/{product_id}','ProductController@addCart');
+// TODO: Blog Post Route..
+Route::get('blog/post','BlogController@blog')->name('blog.post');
+Route::get('language/english','BlogController@english')->name('language.english');
+Route::get('language/arabic','BlogController@arabic')->name('language.arabic');
+Route::get('blog/single/{id}','BlogController@singleBlog');
+// TODO: Payment Step Route..
+Route::get('payment/page','CartController@paymentPage')->name('payment.step');
+Route::post('user/payment/process','PaymentController@payment')->name('payment.process');
+// TODO: Product details page..
+Route::get('products/{id}','ProductController@productsView');
+Route::get('all/category/{id}','ProductController@viewAllCat');
 
 

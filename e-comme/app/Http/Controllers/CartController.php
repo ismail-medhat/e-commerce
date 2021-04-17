@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+
 
 class CartController extends Controller
 {
@@ -146,7 +148,7 @@ class CartController extends Controller
         if (Auth::check()) {
 
             $cart = Cart::content();
-            return view('pages.checkout',compact('cart'));
+            return view('pages.checkout', compact('cart'));
         } else {
             // TODO: Display a toaster  warning cart message..
             $notification = array(
@@ -161,13 +163,56 @@ class CartController extends Controller
     {
         $user_id = Auth::id();
         $product = DB::table('wishlists')
-            ->join('products','wishlists.product_id','products.id')
-            ->select('products.*','wishlists.user_id')
-            ->where('wishlists.user_id',$user_id)
+            ->join('products', 'wishlists.product_id', 'products.id')
+            ->select('products.*', 'wishlists.user_id')
+            ->where('wishlists.user_id', $user_id)
             ->get();
 
         //return \response()->json($product);
-        return view('pages.wishlist',compact('product'));
+        return view('pages.wishlist', compact('product'));
+    }
+
+    public function coupon(Request $request)
+    {
+        $coupon = $request->coupon;
+        $check = DB::table('coupons')->where('coupon', $coupon)->first();
+        if ($check) {
+            Session::put('coupon', [
+                'name' => $check->coupon,
+                'discount' => $check->discount,
+                'balance' => Cart::subtotal() - $check->discount,
+            ]);
+            // TODO: Display a toaster  success cart message..
+            $notification = array(
+                'message' => 'Successfully Coupon Applied',
+                'alert-type' => 'success'
+            );
+            return Redirect()->back()->with($notification);
+        } else {
+            // TODO: Display a toaster  success cart message..
+            $notification = array(
+                'message' => 'Invalid Coupon',
+                'alert-type' => 'warning'
+            );
+            return Redirect()->back()->with($notification);
+        }
+    }
+
+    public function removeCoupon()
+    {
+        Session::forget('coupon');
+        // TODO: Display a toaster  success cart message..
+        $notification = array(
+            'message' => ' Coupon Removed Successfully',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function paymentPage()
+    {
+        $cart = Cart::content();
+        return view('pages.payment',compact('cart'));
     }
 
 }
